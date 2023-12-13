@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/login.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo-con">
+            <div class="logo">
+                <a class="eli">Eli</a><a class="js">Js</a>
+            </div>
+        </div>
+        <div class="card">
+            <h1>Login</h1>
+            <div class="login-text">Sign in to your account to continue</div>
+            <div class="card-form">
+                <label for="username">Username or Email-Adress:</label>
+                <br>
+                <input class="input-field" type="text" name="username" id="username" placeholder="mail@example.de">
+            </div>
+            <div class="card-form">
+                <label for="password">Password:</label>
+                <br>
+                <input class="input-field" type="password" name="password" id="password" placeholder="password">
+            </div>
+            <input type="button" value="Login" class="login-btn" onclick="login()">
+            <footer>Please enter your username and password to access your account. If you don't have an account yet,
+                you can also <a class="makeBlue" href="./signUp.html">sign up </a>for a new one. Forgot your password?
+                <a class="makeBlue">Click here </a>to reset it.</footer>
+            <br>
+        </div>
+    </div>
+    <script>
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const result = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            }).then(res => res.json());
+            if (result.status === 'ok') {
+                document.cookie = `sessionId=${result.data}; path=/`;
+                window.location.href = '/admin';
+            } else {
+                alert(result.error);
+            }
+        }
+    </script>
+</body>
+
+</html>

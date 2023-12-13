@@ -1,0 +1,65 @@
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/admin.css">
+</head>
+
+<body>
+    <%- include('../navbar/adminNavbarView.ejs') %>
+    <br>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="title">Test</div>
+            <div class="title-text">Hier können einfache Einstellungen verwaltet werden</div>
+            <div class="card-form">
+                <label for="username">Neuer Nutzername/Email-Adress:</label>
+                <br>
+                <input class="input-field" type="text" name="username" id="username" placeholder="new@mail-example.de">
+            </div>
+            <div class="card-form">
+                <label for="newPassword">Neues Password:</label>
+                <br>
+                <input class="input-field" type="password" name="newPassword" id="newPassword">
+            </div>
+            <div class="card-form">
+                <label for="newPassword2">Neues Password besätigen:</label>
+                <br>
+                <input class="input-field" type="password" name="newPassword2" id="newPassword2">
+            </div>
+            <input type="button" value="Speichern" class="save-btn" onclick="updateUser()">
+            <footer>Um ihre Nutzerdaten zu ändern müssen sie erst ihr altes Password eingeben. Wenn sie ihr Password
+                vergessen haben, können sie <a class="makeBlue">hier </a>den Systemadministrator benachrichtigen.</footer>
+            <br>
+        </div>
+    </div>
+    <script>
+        async function updateUser() {
+            const newUsername = document.getElementById('username').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const newPassword2 = document.getElementById('newPassword2').value;
+            let password;
+            let response;
+            newPassword === newPassword2 && newPassword ? password = newPassword : alert('Die neuen Passwörter stimmen nicht überein');
+            const result = await fetch('/updateUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ newUsername, password })
+            }).then(res => res.json());
+
+            console.log(result);
+
+            if(result.status == 'ok'){
+                window.location.href = '/admin';
+            }
+            else{
+                alert('Fehler, Nutzername und Passwort wurden nicht geändert')
+            }
+        }
+    </script>
+    </script>
+</body>
+
+</html>
