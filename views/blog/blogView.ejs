@@ -8,7 +8,13 @@
 
 <body>
     <%- include('../navbar/navbarView.ejs') %>
-    <h1 style="color: white">Home</h1>
+    <br>
+    <br>
+    <div class="container">
+        <% blogPosts.forEach(function(blogPost) { %>
+            <%- include('../blog/blogPost.ejs', {blogPost: blogPost}) %>
+        <% }); %>
+    </div>
 </body>
 
 </html>

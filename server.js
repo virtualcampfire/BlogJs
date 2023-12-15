@@ -24,6 +24,6 @@ app.use('/', adminRouter);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, '192.168.2.209', () => {
     console.log(`Server is running on port ${PORT}`);
 });
