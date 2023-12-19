@@ -28,7 +28,7 @@ body{
 
 .nav-left{
     justify-content: left;
-    color: yellow;
+    color: white;
 }
 
 .nav-left .nav-ele{
@@ -41,4 +41,8 @@ body{
 
 .nav-ele{
     cursor: pointer;
+}
+
+.active{
+    color: #7a7ae0;
 }

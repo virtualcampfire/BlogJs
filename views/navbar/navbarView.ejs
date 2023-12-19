@@ -1,3 +1,40 @@
-<div>
-    Navbar
+<link rel="stylesheet" href="/navbar.css">
+<div class="navbar">
+   <div class="nav-side nav-left">
+        <div class="nav-ele" onclick="window.location.href = '/'">
+            <strong>EliJs</strong>
+        </div>
+   </div> 
+   <div class="nav-side nav-right">
+        <div class="nav-ele" id="home" onclick="window.location.href = '/'">
+            Home
+        </div>
+        <div class="nav-ele" id="blog" onclick="window.location.href = '/blog'">
+            Blog
+        </div>
+        <div class="nav-ele" id="about" onclick="window.location.href = '/'">
+            About
+        </div>
+        <div class="nav-ele" id="contact" onclick="window.location.href = '/'">
+            Kontakt
+        </div>
+   </div> 
 </div>
+<br>
+<br>
+<script>
+    var url = window.location.href;
+    var lastPart = url.split("/").pop();
+    if (lastPart == "" || lastPart == "home") {
+        document.getElementById("home").classList.add("active");
+    }
+    if (lastPart == "blog") {
+        document.getElementById("blog").classList.add("active");
+    }
+    if (lastPart == "about") {
+        document.getElementById("about").classList.add("active");
+    }
+    if (lastPart == "contact") {
+        document.getElementById("contact").classList.add("active");
+    }
+</script>

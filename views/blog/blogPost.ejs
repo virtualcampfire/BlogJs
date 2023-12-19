@@ -1,0 +1,14 @@
+<div class="card" onclick="window.location.href = '/blog/' + '<%= blogPost.id %>'">
+    <div class="title">
+        <div class="date"><%= blogPost.date %></div>
+        <div class="title"><%= blogPost.title %></div>
+        <div class="container">
+            <img class="card-img" src="<%= "./imgs/" + blogPost.image %>" alt="image" class="image">
+        </div>
+        <div class="title-text">
+            <%= 
+                blogPost.text.length > 100 ? blogPost.text.substring(0, 100) + "..." : blogPost.text
+            %>
+        </div>
+    </div>
+</div>

@@ -3,6 +3,10 @@ import homeRoutes from './routes/homeRouter.js';
 import adminRouter from './routes/adminRouter.js';
 import path from 'path';
 import cookieParser from 'cookie-parser';
+import DatabaseController from './database/DatabaseController.js';
+
+const dbc = new DatabaseController();
+dbc.migrate();
 
 const app = express();
 
@@ -24,6 +28,6 @@ app.use('/', adminRouter);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, '192.168.2.209', () => {
     console.log(`Server is running on port ${PORT}`);
 });

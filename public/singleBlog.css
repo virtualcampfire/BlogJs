@@ -1,0 +1,103 @@
+body {
+    background-color: #15202b;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 800px;
+    color: grey;
+    background-color: #212833;
+    border-radius: 10px;
+    padding: 30px;
+    font-family: sans-serif;
+    font-size: 20px;
+    margin: 10px;
+    text-align: left;
+    box-shadow: 0 0 14px 0 #00000075;;
+}
+
+.title {
+    color: white;
+    margin-bottom: 8px;
+    font-size: 30px;
+    text-decoration: underline;
+}
+
+.card-img {
+    max-height: 450px;
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 6px;
+}
+
+.creator {
+    font-size: 14px;
+    color: #a4a4a4;
+    text-align: right;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-right: 5px;
+}
+
+.title-text {
+    font-size: 18px;
+    color: #c5c5c5;
+}
+
+.makeBlue {
+    color: #7a7ae0;
+    cursor: pointer;
+}
+
+.back-btn {
+    background-color: blue;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 10px;
+    width: 100px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.5s;
+    text-align: center;
+}
+
+.save-btn:hover {
+    background-color: yellow;
+    color: black;
+    transition: 0.5s;
+}
+
+.date {
+    font-size: 16px;
+    text-align: right;
+}
+
+.first-letter-big::first-letter {
+    font-size: 50px;
+    font-family: "Georgia", serif;
+    color: white;
+    float: left;
+    line-height: 0.8;
+    margin-right: 5px;
+}
+
+@media screen and (max-width: 800px) {
+    .card {
+        width: 100%;
+        padding: 10px;
+        margin: 0px;
+    }
+}
