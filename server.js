@@ -3,6 +3,10 @@ import homeRoutes from './routes/homeRouter.js';
 import adminRouter from './routes/adminRouter.js';
 import path from 'path';
 import cookieParser from 'cookie-parser';
+import DatabaseController from './database/DatabaseController.js';
+
+const dbc = new DatabaseController();
+dbc.migrate();
 
 const app = express();
 
