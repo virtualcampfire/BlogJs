@@ -1,2 +1,2 @@
 # BlogJs
-An easy Blog made with ExpressJs, SessionJs and EJs
+An easy Blog made with ExpressJs, SessionJs EJs and MySQL
