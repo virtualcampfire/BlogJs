@@ -1,6 +1,22 @@
 import express from "express";
 import SessionJs from "sessionjs";
+import multer from "multer";
+import path from "path";
+import DatabaseController from "../database/DatabaseController.js";
 
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'public/imgs');
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
+
+const dbc = new DatabaseController();
 const adminRouter = express.Router();
 let session = new SessionJs();
 
@@ -79,6 +95,29 @@ adminRouter.post("/updateUser", (req, res) => {
         status: 'ok',
         data: admin
     });
+});
+
+adminRouter.post("/newBlogPost", upload.single('image'), (req, res) => {
+    let title = req.body.title;
+    let category = req.body.category;
+    let example = req.body.example;
+    let creator = req.body.creator;
+    let text = req.body.text;
+
+    let imageURL = req.file ? '/imgs/' + req.file.filename : '';
+
+    let blog = {
+        title: title,
+        category: category,
+        example: example,
+        image: imageURL,
+        creator: creator,
+        text: text
+    };
+
+    dbc.createBlog(blog);
+
+    res.redirect('/admin');
 });
 
 export default adminRouter;
