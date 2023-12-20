@@ -1,12 +1,19 @@
 import DB from './DB.js';
 import Migration from './Migration.js';
 
-export default class DatabaseController{
-    constructor(){
+export default class DatabaseController {
+    constructor() {
         this.db = new DB();
-        this.db.connect();
     }
-    migrate(){
+
+    connect() {
+        this.connection.connect((err) => {
+            if (err) throw err;
+            console.log('Connected to MySQL!');
+        });
+    }
+
+    migrate() {
         const migration = new Migration();
         this.db.connection.query(migration.user(), (err, result) => {
             if (err) throw err;
@@ -17,9 +24,49 @@ export default class DatabaseController{
             console.log("Posts table created");
         });
     }
-    getBlogs(){
+
+    getBlogs() {
         return new Promise((resolve, reject) => {
             this.db.connection.query("SELECT * FROM posts", (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    getBlog(id) {
+        return new Promise((resolve, reject) => {
+            this.db.connection.query(`SELECT * FROM posts WHERE id = ${id}`, (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    createBlog(blog) {
+        const { title, category, example, image, creator, date, text } = blog;
+        return new Promise((resolve, reject) => {
+            this.db.connection.query(`INSERT INTO posts (title, category, example, image, creator, date, text) VALUES ('${title}', '${category}', '${example}', '${image}', '${creator}', '${date}', '${text}')`, (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    updateBlog(blog) {
+        const { id, title, category, example, image, creator, text } = blog;
+        const date = new Date();
+        return new Promise((resolve, reject) => {
+            this.db.connection.query(`UPDATE posts SET title = '${title}', category = '${category}', example = '${example}', image = '${image}', creator = '${creator}', date = '${date}', text = '${text}' WHERE id = ${id}`, (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    deleteBlog(id) {
+        return new Promise((resolve, reject) => {
+            this.db.connection.query(`DELETE FROM posts WHERE id = ${id}`, (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });

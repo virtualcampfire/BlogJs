@@ -24,33 +24,13 @@
                 </div>
                 <br>
                 <div class="container">
-                    <img class="card-img" src="<%= " ../imgs/" + blogPost.image %>" alt="image" class="image">
-                    <div class="creator"><%= blogPost.creator %></div>
+                    <img class="card-img" src="<%= blogPost.image %>" alt="image" class="image">
+                    <div class="creator">
+                        <%= blogPost.creator %>
+                    </div>
                 </div>
                 <div class="title-text first-letter-big">
                     <%= blogPost.text %>
-                        <br>
-                        <br>
-                        <h1>Das Document Object Model (DOM) in der Webentwicklung</h1>
-
-                        <h2>Verstehen des Document Object Models</h2>
-                        <p>Das Document Object Model, kurz DOM, ist ein entscheidendes Konzept in der Welt der
-                            Webentwicklung. Es handelt sich dabei um eine Baumstruktur, die die Hierarchie von HTML-
-                            oder XML-Dokumenten darstellt. Das DOM ermöglicht es JavaScript, auf die Inhalte einer
-                            Webseite zuzugreifen, sie zu ändern und damit interaktive und dynamische Webseiten zu
-                            erstellen.</p>
-
-                        <p>In diesem Blog-Beitrag werden wir uns ausführlich mit dem DOM beschäftigen und lernen, wie
-                            Sie es in JavaScript verwenden können, um HTML-Elemente zu manipulieren und beeindruckende
-                            Webanwendungen zu erstellen.</p>
-
-                        <h2>Die Struktur des DOM</h2>
-                        <p>Bevor wir uns in die praktische Anwendung des DOM in JavaScript vertiefen, ist es wichtig zu
-                            verstehen, was das DOM eigentlich ist. Das DOM stellt eine baumartige Darstellung der
-                            Struktur eines HTML-Dokuments dar. Jedes HTML-Element, sei es ein Absatz, eine Überschrift,
-                            ein Bild oder ein Formularfeld, wird im DOM durch ein Objekt repräsentiert. Diese Objekte
-                            sind miteinander verschachtelt und bilden die Hierarchie der Webseite ab. Das DOM ermöglicht
-                            es, auf diese Objekte zuzugreifen und sie zu verändern.</p>
                 </div>
                 <br>
                 <a class="back-btn" onclick="window.location.href = '/blog'">Zurück</a>
@@ -58,4 +38,5 @@
                 <br>
             </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
 </body>

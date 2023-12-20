@@ -1,13 +1,61 @@
 <html>
 <head>
     <title>Home</title>
+    <link rel="stylesheet" href="/admin.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
     <%- include('../navbar/adminNavbarView.ejs') %>
-    <h1>Admin</h1>
-    <p>Welcome to the home page!</p>
+    <br>
+    <br>
+    <div class="container">
+        <div class="card">
+            <div class="title">Create new Blog-Post</div>
+            <label for="title">Title:</label><br>
+            <input class="input-field" type="text" id="title" name="title"><br>
+            <label for="category">Category:</label><br>
+            <input class="input-field" type="text" id="category" name="category"><br>
+            <label for="example">Example:</label><br>
+            <textarea class="input-text" type="text" id="example" name="example"></textarea><br>
+            <label for="image">Image:</label><br>
+            <input class="input-img" type="file" id="image" name="image"><br>
+            <label for="creator">Creator:</label><br>
+            <input class="input-field" type="text" id="creator" name="creator"><br>
+            <label for="text">Text:</label><br>
+            <textarea class="input-text" id="text" name="text"></textarea><br>
+            <input class="save-btn" type="submit" value="Submit" onclick="save()">
+        </div>
+    </div>
 </body>
+<script>
+    function save() {
+    var title = document.getElementById("title").value;
+    var category = document.getElementById("category").value;
+    var example = document.getElementById("example").value;
+    var image = document.getElementById("image").files[0];
+    var creator = document.getElementById("creator").value;
+    var text = document.getElementById("text").value;
+    
+    var formData = new FormData();
+    formData.append('title', title);
+    formData.append('category', category);
+    formData.append('example', example);
+    formData.append('image', image);
+    formData.append('creator', creator);
+    formData.append('text', text);
 
-</html>
+    fetch('/newBlogPost', {
+        method: 'POST',
+        body: formData 
+    })
+    .then((response) => {
+        return response.json();
+    })
+    .then((data) => {
+        console.log(data);
+    });
+}
+
+</script>
+</html> 
