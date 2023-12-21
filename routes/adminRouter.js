@@ -20,33 +20,37 @@ const dbc = new DatabaseController();
 const adminRouter = express.Router();
 let session = new SessionJs();
 
-let admin = {
-    username: "admin",
-    password: "admin"
-};
-
-// Temp Start User
-session.start(admin);
-
-adminRouter.post("/login", (req, res) => {
+adminRouter.post("/login", async (req, res) => {
     let username = req.body.username;
-    let password = req.body.password;
 
-    let sessions = session.getAll();
-
-    let thisSession = sessions.find((singleSession) => {
-        return singleSession.user.username == username && singleSession.user.password == password;
-    });
-
-    if(thisSession){
-        session.renew(thisSession.sessionId);
-        return res.json({
-            status: 'ok',
-            data: thisSession.sessionId
+    const users = await dbc.getUser(username);
+    
+    if(users.length == 0){
+        console.log("Failed to login");
+        res.json({
+            status: 'error',
+            message: 'Failed to login'
         });
     }
+
     else{
-        res.redirect('/admin');
+        users.forEach((user) => {
+            if(user.password == req.body.password){
+                let sessionId = session.start(user);
+                res.cookie('sessionId', sessionId);
+                res.json({
+                    status: 'ok',
+                    data: sessionId
+                });
+            }
+            else{
+                console.log("Failed to login");
+                res.json({
+                    status: 'error',
+                    message: 'Failed to login'
+                });
+            }
+        });
     }
 });
 
@@ -76,25 +80,23 @@ adminRouter.post("/updateUser", (req, res) => {
     let password = req.body.password;
     let thisSession = req.thisSession;
     let sessionId = session.getSessionId(thisSession);
+    const user = session.getUser(sessionId);
 
-    console.log(thisSession);
+    newUsername ? newUsername : newUsername = user.username;
+    password ? password : password = user.password;
 
-    newUsername ? newUsername : newUsername = thisSession.user.username;
 
-    let newUser = {
+    const newUser = {
+        id: user.id,
         username: newUsername,
         password: password
     };
 
-    console.log(sessionId);
-
     let check = session.updateUser(sessionId, newUser);
-    console.log(check)
-    console.log(session.getAll());
+    dbc.updateUser(newUser);
 
     res.json({
-        status: 'ok',
-        data: admin
+        status: 'ok'
     });
 });
 
