@@ -169,4 +169,10 @@ adminRouter.get("/delete/:id", async (req, res) => {
     res.redirect('/admin');
 });
 
+adminRouter.get("/logout", (req, res) => {
+    let sessionId = req.cookies['sessionId'];
+    session.end(sessionId);
+    res.redirect('/');
+});
+
 export default adminRouter;
