@@ -62,8 +62,9 @@ adminRouter.use((req, res, next) => {
     }
 });
 
-adminRouter.get("/admin", (req, res) => {
-    res.render('./admin/adminView');
+adminRouter.get("/admin", async (req, res) => {
+    const blogs = await dbc.getBlogs();
+    res.render('./admin/adminView', { blogPosts: blogs });
 });
 
 adminRouter.get("/settings", (req, res) => {
@@ -117,6 +118,54 @@ adminRouter.post("/newBlogPost", upload.single('image'), (req, res) => {
 
     dbc.createBlog(blog);
 
+    res.redirect('/admin');
+});
+
+adminRouter.get("/edit/:id", async (req, res) => {
+    const id = req.params.id;
+    const post = await dbc.getBlog(id);
+    res.render('./admin/editBlogPost.ejs', { blogPost: post[0] });
+});
+
+adminRouter.post("/updatePost", upload.single('image'), async (req, res) => {
+    const id = req.body.id;
+    const title = req.body.title;
+    const category = req.body.category;
+    const example = req.body.example;
+    const creator = req.body.creator;
+    const text = req.body.text;
+    let imageURL;
+
+    if(req.file == undefined){
+        console.log("No image uploaded");
+        const post = await dbc.getBlog(id);
+        imageURL = post[0].image;
+    }
+    else{
+        console.log("Image uploaded");
+        imageURL = req.file ? '/imgs/' + req.file.filename : '';
+    }
+
+    let blog = {
+        id: id,
+        title: title,
+        category: category,
+        example: example,
+        image: imageURL,
+        creator: creator,
+        text: text
+    };
+
+    dbc.updateBlog(blog);
+
+    res.json({
+        status: 'ok'
+    });
+});
+
+adminRouter.get("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+    dbc.deleteBlog(id);
     res.redirect('/admin');
 });
 

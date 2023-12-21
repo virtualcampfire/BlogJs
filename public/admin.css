@@ -118,6 +118,61 @@ footer{
     font-size: 12px;
 }
 
+.container-post{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 700px;
+    margin-top: 20px;
+    border-top: black solid 1px;
+}
+
+.container-edit{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.center{
+    text-align: center;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.left-side{
+    width: 70%;
+}
+
+.right-side{
+    width: 30%;
+}
+
+.edit{
+    color: #7a7ae0;
+    cursor: pointer;
+    width: 60px;
+}
+
+.delete{
+    color: red;
+    cursor: pointer;
+    width: 60px;
+}
+
+.post-element{
+    width: 200px;
+}
+
+.img-show{
+    width: 700px;
+    border-radius: 10px;
+}
+
 @media screen and (max-width: 800px) {
     .card{
         width: 100%;
@@ -134,6 +189,15 @@ footer{
         width: 100%;
     }
     .input-text{
+        width: 100%;
+    }
+    .container-post{
+        width: 100%;
+    }
+    .category{
+        display: none;
+    }
+    .img-show{
         width: 100%;
     }
 }
