@@ -11,31 +11,26 @@
     <br>
     <div class="container">
         <div class="card">
-            <div class="title">Create new Blog-Post</div>
+            <div class="title">Edit</div>
             <label for="title">Title:</label><br>
-            <input class="input-field" type="text" id="title" name="title"><br>
+            <input class="input-field" type="text" id="title" name="title" value="<%= blogPost.title %>"><br>
             <label for="category">Category:</label><br>
-            <input class="input-field" type="text" id="category" name="category"><br>
+            <input class="input-field" type="text" id="category" name="category" value="<%= blogPost.category %>"><br>
             <label for="example">Example:</label><br>
-            <textarea class="input-text" type="text" id="example" name="example"></textarea><br>
+            <textarea class="input-text" type="text" id="example" name="example"><%= blogPost.example %></textarea><br>
+            <br>
+            <div class="container">
+                <img class="img-show" src="<%= blogPost.image %>" alt="image" class="image">
+            </div>
+            <br>
             <label for="image">Image:</label><br>
             <input class="input-img" type="file" id="image" name="image"><br>
             <label for="creator">Creator:</label><br>
-            <input class="input-field" type="text" id="creator" name="creator"><br>
+            <input class="input-field" type="text" id="creator" name="creator" value="<%= blogPost.creator %>"><br>
             <label for="text">Text:</label><br>
-            <textarea class="input-text" id="text" name="text"></textarea><br>
+            <textarea class="input-text" id="text" name="text"><%= blogPost.text %></textarea><br>
             <input class="save-btn" type="submit" value="Submit" onclick="save()">
-        </div>
-    </div>
-    <br>
-    <div class="container">
-        <div class="card">
-            <div class="title">
-                <div class="center">Blogs Bearbeiten</div>
-                <% blogPosts.forEach(function(blogPost) { %>
-                    <%- include('./blogPostEntry.ejs', {blogPost: blogPost}) %>
-                <% }); %>
-            </div>
+            <a id="id" style="display: none"><%= blogPost.id %></a>
         </div>
     </div>
 </body>
@@ -47,8 +42,11 @@
         var image = document.getElementById("image").files[0];
         var creator = document.getElementById("creator").value;
         var text = document.getElementById("text").value;
+        var id = document.getElementById("id").innerHTML;
+        id = parseInt(id);
         
         var formData = new FormData();
+        formData.append('id', id);
         formData.append('title', title);
         formData.append('category', category);
         formData.append('example', example);
@@ -56,7 +54,7 @@
         formData.append('creator', creator);
         formData.append('text', text);
 
-        fetch('/newBlogPost', {
+        fetch('/updatePost', {
             method: 'POST',
             body: formData 
         })
@@ -64,8 +62,8 @@
             return response.json();
         })
         .then((data) => {
-            console.log(data);
+            window.location.href = '/admin';
         });
     }
 </script>
-</html> 
+</html>

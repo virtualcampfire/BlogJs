@@ -1,0 +1,25 @@
+<div class="container-post">
+    <div class="left-side">
+        <div class="container-edit">
+            <div class="title-text pointer post-element"  onclick="window.location.href = '/blog/' + '<%= blogPost.id %>'">
+                <%= blogPost.title.length > 20 ? blogPost.title.substring(0, 10) + "..." : blogPost.title %>
+            </div>
+            <div class="title-text category post-element">
+                <%= blogPost.category.length > 10 ? blogPost.category.substring(0, 10) + "..." : blogPost.category %>
+            </div>
+            <div class="title-text post-element">
+                <%= blogPost.date %>
+            </div>
+        </div>
+    </div>
+    <div class="right-side">
+        <div class="container-edit">
+            <div class="title-text edit" onclick="window.location.href = '/edit/' + '<%= blogPost.id %>'">
+                Edit
+            </div>
+            <div class="title-text delete" onclick="window.location.href = '/delete/' + '<%= blogPost.id %>'">
+                Delete
+            </div>
+        </div>
+    </div>
+</div>

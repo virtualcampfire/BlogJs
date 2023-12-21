@@ -15,7 +15,6 @@ homeRoutes.get("/about", (req, res) => {
 
 homeRoutes.get("/blog", async (req, res) => {
     const blogs = await dbc.getBlogs();
-    console.log(blogs);
     res.render('./blog/blogView', { blogPosts: blogs });
 });
 
