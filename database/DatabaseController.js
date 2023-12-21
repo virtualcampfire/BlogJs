@@ -7,7 +7,7 @@ export default class DatabaseController {
     }
 
     connect() {
-        this.connection.connect((err) => {
+        this.db.connection.connect((err) => {
             if (err) throw err;
             console.log('Connected to MySQL!');
         });
@@ -43,7 +43,7 @@ export default class DatabaseController {
 
     getBlog(id) {
         return new Promise((resolve, reject) => {
-            this.db.connection.query(`SELECT * FROM posts WHERE id = ${id}`, (err, result) => {
+            this.db.connection.query("SELECT * FROM posts WHERE id = ?", [id], (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });
@@ -53,7 +53,7 @@ export default class DatabaseController {
     createBlog(blog) {
         const { title, category, example, image, creator, date, text } = blog;
         return new Promise((resolve, reject) => {
-            this.db.connection.query(`INSERT INTO posts (title, category, example, image, creator, date, text) VALUES ('${title}', '${category}', '${example}', '${image}', '${creator}', '${date}', '${text}')`, (err, result) => {
+            this.db.connection.query("INSERT INTO posts (title, category, example, image, creator, date, text) VALUES (?, ?, ?, ?, ?, ?, ?)", [title, category, example, image, creator, date, text], (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });
@@ -64,7 +64,7 @@ export default class DatabaseController {
         const { id, title, category, example, image, creator, text } = blog;
         const date = new Date();
         return new Promise((resolve, reject) => {
-            this.db.connection.query(`UPDATE posts SET title = '${title}', category = '${category}', example = '${example}', image = '${image}', creator = '${creator}', date = '${date}', text = '${text}' WHERE id = ${id}`, (err, result) => {
+            this.db.connection.query("UPDATE posts SET title = ?, category = ?, example = ?, image = ?, creator = ?, date = ?, text = ? WHERE id = ?", [title, category, example, image, creator, date, text, id], (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });
@@ -73,7 +73,7 @@ export default class DatabaseController {
 
     deleteBlog(id) {
         return new Promise((resolve, reject) => {
-            this.db.connection.query(`DELETE FROM posts WHERE id = ${id}`, (err, result) => {
+            this.db.connection.query("DELETE FROM posts WHERE id = ?", [id], (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });
@@ -82,7 +82,7 @@ export default class DatabaseController {
 
     getUser(username) {
         return new Promise((resolve, reject) => {
-            this.db.connection.query(`SELECT * FROM users WHERE username = '${username}'`, (err, result) => {
+            this.db.connection.query("SELECT * FROM users WHERE username = ?", [username], (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });
@@ -92,7 +92,7 @@ export default class DatabaseController {
     updateUser(user) {
         const { id, username, password } = user;
         return new Promise((resolve, reject) => {
-            this.db.connection.query(`UPDATE users SET username = '${username}', password = '${password}' WHERE id = ${id}`, (err, result) => {
+            this.db.connection.query("UPDATE users SET username = ?, password = ? WHERE id = ?", [username, password, id], (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });
@@ -101,7 +101,7 @@ export default class DatabaseController {
 
     getAllUsers() {
         return new Promise((resolve, reject) => {
-            this.db.connection.query(`SELECT * FROM users`, (err, result) => {
+            this.db.connection.query("SELECT * FROM users", (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });
