@@ -49,7 +49,7 @@
                 document.cookie = `sessionId=${result.data}; path=/`;
                 window.location.href = '/admin';
             } else {
-                alert(result.error);
+                alert(result.message);
             }
         }
     </script>

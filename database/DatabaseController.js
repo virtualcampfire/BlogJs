@@ -13,7 +13,7 @@ export default class DatabaseController {
         });
     }
 
-    migrate() {
+    async migrate() {
         const migration = new Migration();
         this.db.connection.query(migration.user(), (err, result) => {
             if (err) throw err;
@@ -23,6 +23,13 @@ export default class DatabaseController {
             if (err) throw err;
             console.log("Posts table created");
         });
+        const users = await this.getAllUsers();
+        if (users.length == 0) {
+            this.db.connection.query(migration.createAdmin(), (err, result) => {
+                if (err) throw err;
+                console.log("Admin created");
+            });
+        }
     }
 
     getBlogs() {
@@ -67,6 +74,34 @@ export default class DatabaseController {
     deleteBlog(id) {
         return new Promise((resolve, reject) => {
             this.db.connection.query(`DELETE FROM posts WHERE id = ${id}`, (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    getUser(username) {
+        return new Promise((resolve, reject) => {
+            this.db.connection.query(`SELECT * FROM users WHERE username = '${username}'`, (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    updateUser(user) {
+        const { id, username, password } = user;
+        return new Promise((resolve, reject) => {
+            this.db.connection.query(`UPDATE users SET username = '${username}', password = '${password}' WHERE id = ${id}`, (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    getAllUsers() {
+        return new Promise((resolve, reject) => {
+            this.db.connection.query(`SELECT * FROM users`, (err, result) => {
                 if (err) reject(err);
                 resolve(result);
             });
